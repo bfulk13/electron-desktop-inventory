@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add List Item</title>
+    
+    <title>Add Shopping List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <form>
-        <div>
-            <label>Enter Item</label>
-            <input type="text" id="item" autofocus/>
-        </div>
-        <button type="submit">Add Item</button>
-    </form>
+    <div class="container">
+        <form>
+            <div>
+                <label>Enter Item</label>
+                <input type="text" id="item" autofocus>
+                <input id="uploadImage" placeholder="Image URL" type="text" name="myPhoto" />
+                <!-- <img id="uploadPreview" style="width: 100px; height: 100px;" /> -->
+            </div>
+            <button class='btn waves-effect waves-light' type="submit">Add Item</button>
+        </form>
+    </div>  
 
     <script>
-        const electron = require('electron');
-        const { ipcRenderer } = electron;
+        const electron = require('electron')
+        const { ipcRenderer } = electron
 
-        const form = document.querySelector('form');
-        form.addEventListener('submit', submitForm);
+        const form = document.querySelector('form')
+        form.addEventListener('submit', submitForm)
 
-        function submitForm(e){
-            e.preventDefault();
-            const item = document.querySelector('#item').value;
-            ipcRenderer.send('item:add', item);
+        image.addEventListener('submit', submitForm)
+
+        function submitForm(e) {
+            e.preventDefault()
+            const item = document.querySelector('#item').value
+            const image = document.querySelector('#uploadImage').value
+            let package = {item, image}
+            ipcRenderer.send('item:add', package)
         }
+
+        // function PreviewImage() {
+        // var oFReader = new FileReader();
+        // oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+        // oFReader.onload = function (oFREvent) {
+        //     document.getElementById("uploadPreview").src = oFREvent.target.result;
+        // };
+    // };
     </script>
 </body>
 </html>
