@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Inventory</h1>
+    <ul>
+
+    </ul>
+
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        const ul = document.querySelector('ul');
+
+        // Add Item
+        ipcRenderer.on('item:add', function(e, item){
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(item);
+            li.appendChild(itemText);
+            ul.appendChild(li);
+        })
+
+        // Clear Items --> params need to match exactly with white space
+        ipcRenderer.on('item:clear', function(e, item){
+            ul.innerHTML = '';
+        })
+
+        // Remove Item
+        ul.addEventListener('dblclick', removeItem);
+
+        function removeItem(e){
+            e.target.remove();
+        }
+
+    </script>
+</body>
+</html>
